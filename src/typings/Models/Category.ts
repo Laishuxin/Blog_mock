@@ -2,7 +2,7 @@ import { BaseItem } from "./_Base"
 
 export type CategoryType = string
 export interface CategoryItem extends BaseItem {
-  name: string
+  name: CategoryType
 }
 
 export type CategoryList = CategoryItem[]
