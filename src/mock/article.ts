@@ -44,35 +44,34 @@ function getArticleWrap(): GetArticle {
   return function (id: number): ArticleItem {
     return {
       id,
-      createAt: getDate(),
-      updateAt: getDate(),
-      title: getTitle({ ...articleConfig.title }),
+      createAt   : getDate(),
+      updateAt   : getDate(),
+      title      : getTitle({ ...articleConfig.title }),
       description: getParagraph({
         paragraphMin: articleConfig.description.min,
         paragraphMax: articleConfig.description.max,
       }),
-      content: getContent({ ...articleConfig.content }),
+      content     : getContent({ ...articleConfig.content }),
       firstPicture: _firstPictures[id % _firstPicturesLen],
-      category: getCategory(id),
-      author: {
+      category    : getCategory(id).name,
+      author      : {
         name: getName(),
         email: _email,
         url: Random.boolean() ? _url : '',
       },
 
-      views: getInteger(articleConfig.views),
+      views   : getInteger(articleConfig.views),
       favorite: getInteger(articleConfig.favorite),
-      labels: getLabels(id, getInteger({ min: 1, max: 3 })),
+      labels  : getLabels(id, getInteger({ min: 1, max: 3 })),
       comments: getCommentList(id, getInteger(articleConfig.comments)),
-      tag: getTag(id),
+      tag     : getTag(id),
 
       commendable: getBoolean({ max: 0.95 }),
-      admirable: getBoolean({ max: 0.95 }),
-      sharable: getBoolean({ max: 0.95 }),
-      published: getBoolean({ max: 0.9 }),
+      admirable  : getBoolean({ max: 0.95 }),
+      sharable   : getBoolean({ max: 0.95 }),
+      published  : getBoolean({ max: 0.9 }),
     }
   }
 }
 
 export const getArticle: GetArticle = getArticleWrap()
-

@@ -1,5 +1,5 @@
 import Router from 'koa-router'
-import { ParsedUrlQuery } from 'node:querystring'
+import { ParsedUrlQuery } from 'querystring'
 import { getArticlesApi } from '../apis/ArticlesApi'
 import {
   ArticlesApiQuery,

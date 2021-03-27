@@ -1,5 +1,6 @@
 import { getInteger } from '../utils/number_utils'
-import { CategoryType } from '../typings/Models/Category'
+import { CategoryItem, CategoryType } from '../typings/Models/Category'
+import { getDate } from '../utils/date_utils'
 
 export const categories: CategoryType[] = [
   '技术相关',
@@ -7,6 +8,19 @@ export const categories: CategoryType[] = [
   '旅游分享',
   '读书心得',
 ]
+
+interface GetCategory {
+  (id: number): CategoryItem
+}
+
+function getCategory (id: number) {
+  return {
+    id,
+    createAt: getDate(),
+    updateAt: getDate(),
+    name: categories[getInteger({ max: categories.length })],
+  }
+}
 
 const categoryCountMap = new Map<CategoryType, number>()
 const categoryArticlesIdMap = new Map<CategoryType, number[]>()

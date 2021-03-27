@@ -1,19 +1,15 @@
 import { cloneDeep } from 'lodash'
-import { blogConfig } from '../config/mock_config'
 import { getArticle } from '../mock/article'
-import { CategoriesApiQueryDefaults } from '../typings/api/CategoriesApi'
 import {
   ArticlesApiQuery,
   ArticlesApiQueryDefaults,
 } from '../typings/api/ArticlesApi'
-import { CategoriesApiQuery } from '../typings/api/CategoriesApi'
 import { ArticleItem, ArticleList } from '../typings/Models/Article'
-import { CategoryType } from '../typings/Models/Category'
 
-class BlogApiManager {
+class ArticleManager {
   // article list: index corresponding to article id
   private _articleList!: ArticleList
-  private _count: number
+  private readonly _count: number
 
   constructor(count = 100) {
     this.init(count)
@@ -31,7 +27,6 @@ class BlogApiManager {
     return this._count
   }
 
-  // article start
   // TODO(rushui 2021-03-27): implement other query
   public getArticleList({
     offset = ArticlesApiQueryDefaults.offset,
@@ -62,19 +57,6 @@ class BlogApiManager {
   getArticleItemById(id: number): ArticleItem | null {
     return id < this._count && id >= 0 ? this._articleList[id] : null
   }
-  // article end
-
-  // category start
-  getCategories({
-    sortField = CategoriesApiQueryDefaults.sortField,
-    isAsc = CategoriesApiQueryDefaults.isAsc,
-  }: CategoriesApiQuery): { category: CategoryType; count: number }[] {
-
-    return []
-  }
-  // category end
 }
 
-const blogManager = new BlogApiManager(blogConfig.articleCount)
-export default blogManager
-export { BlogApiManager }
+export default ArticleManager
