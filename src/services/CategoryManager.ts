@@ -31,7 +31,8 @@ class CategoryManager {
   }
 
   getArticlesIdByCategoryType(category: CategoryType): number[] | undefined {
-    return this._categoryArticlesIdMap.get(category)
+    const articleIdSet = this._categoryArticlesIdMap.get(category)
+    return articleIdSet ? Array.from(articleIdSet.keys()) : undefined
   }
 
   get categories(): CategoryType[] {

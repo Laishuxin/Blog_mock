@@ -10,7 +10,7 @@ export const categories: CategoryType[] = [
 ]
 
 export const categoryCountMap = new Map<CategoryType, number>()
-export const categoryArticlesIdMap = new Map<CategoryType, number[]>()
+export const categoryArticlesIdMap = new Map<CategoryType, Set<number>>()
 
 /**
  * Get category name and increase counter
@@ -28,9 +28,9 @@ const getCategoryName = (): CategoryType => {
 }
 
 const addArticle = (category: CategoryType, id: number) => {
-  const articleArr = categoryArticlesIdMap.get(category)
-  if (articleArr) articleArr.push(id)
-  else categoryArticlesIdMap.set(category, [id])
+  const articleIdSet = categoryArticlesIdMap.get(category)
+  if (articleIdSet) articleIdSet.add(id)
+  else categoryArticlesIdMap.set(category, new Set([id]))
 }
 
 export function getCategory(id: number): CategoryItem {
