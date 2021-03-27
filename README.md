@@ -2,7 +2,7 @@
   由于自己写的[博客](https://github.com/Laishuxin/Blog)后端尚未开发完成，但是[api](https://github.com/Laishuxin/Blog/blob/main/doc/api_doc/api_doc.md)已经提前写好了，为了能提前写博客前端，于是有了该项目。
 
   该项目主要是为自己写的博客提供API。由于在设计API时存在缺陷，所以该项目并没有完全实现与[API文档](https://github.com/Laishuxin/Blog/blob/main/doc/api_doc/api_doc.md)。或者说，该项目对设计的API做了优化。
-O
+
 ## 写在前面
 1. 使用`typescript`进行开发。
    出于一下理由采用`ts`进行开发：
