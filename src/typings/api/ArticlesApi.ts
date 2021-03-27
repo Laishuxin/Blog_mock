@@ -2,6 +2,23 @@ import { ArticleList } from '../Models/Article'
 import { StatusCodes } from './_StatusCodes'
 import { RestfulApi } from './_RestfulApi'
 import { ResponseMessages } from './_ResponseMessage'
+import { CategoryType } from '../Models/Category'
+
+export interface ArticlesApiQuery {
+  offset   : number
+  limit    : number
+  sortField: string
+  isAsc    : boolean
+  category : CategoryType | null
+}
+
+export const ArticlesApiQueryDefaults: ArticlesApiQuery = {
+  offset: 0,
+  limit: 10,
+  sortField: 'updateAt',
+  isAsc: false,
+  category: null
+}
 
 export interface ArticlesApi extends RestfulApi {
   data: {

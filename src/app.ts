@@ -7,8 +7,8 @@ import { setResponseHeaders } from './middlewares'
 
 const app = new Koa()
 
-app.use(router.routes()).use(router.allowedMethods())
 app.use(setResponseHeaders())
+app.use(router.routes()).use(router.allowedMethods())
 app.use(cors())
 
 app.listen(SERVER_PORT, () => {

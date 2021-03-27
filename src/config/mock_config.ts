@@ -1,3 +1,7 @@
+// blog
+export const blogConfig = {
+  articleCount: 100
+}
 // article
 export const articleConfig = {
   title: {

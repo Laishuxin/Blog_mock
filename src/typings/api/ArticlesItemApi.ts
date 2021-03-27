@@ -4,7 +4,11 @@ import { RestfulApi } from "./_RestfulApi";
 import { StatusCodes } from "./_StatusCodes";
 
 export interface ArticlesItemApi extends RestfulApi {
-  data: ArticleItem
+  data: ArticleItem | null
+}
+
+export interface ArticlesItemApiQuery {
+  id: number|undefined
 }
 
 export type ArticleApiStatusOptions =
