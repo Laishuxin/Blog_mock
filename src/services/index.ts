@@ -11,14 +11,19 @@ import { ArticleItem, ArticleList } from '../typings/Models/Article'
 import { CategoryType } from '../typings/Models/Category'
 import ArticleManager from './ArticleManager'
 import CategoryManager from './CategoryManager'
+import { LabelsApiQuery } from '../typings/api/LabelsApi'
+import { LabelType } from '../typings/Models/Label'
+import LabelManager from './LabelManager'
 
 class BlogApiManager {
   private _articleManager: ArticleManager
   private _categoryManager: CategoryManager
+  private _labelManager: LabelManager
 
   constructor(count = 100) {
     this._articleManager = new ArticleManager(count)
     this._categoryManager = new CategoryManager()
+    this._labelManager = new LabelManager()
   }
 
   get count(): number {
@@ -44,11 +49,22 @@ class BlogApiManager {
     const entries = this._categoryManager.getCategories(query)
     return entries.map((item) => ({ category: item[0], count: item[1] }))
   }
-  
-  getArticlesIdByCategoryType(category: CategoryType): number[] | undefined {
-    return this._categoryManager.getArticlesIdByCategoryType(category)
+
+  getArticlesIdByCategoryName(category: CategoryType): number[] | undefined {
+    return this._categoryManager.getArticlesIdByCategoryName(category)
   }
   // category end
+
+  // labels start
+  getLabels(query: LabelsApiQuery): { label: LabelType; count: number }[] {
+    const entries = this._labelManager.getLabels(query)
+    return entries.map((item) => ({ label: item[0], count: item[1] }))
+  }
+
+  getArticlesIdByLabelName(label: LabelType): number[] | undefined {
+    return this._labelManager.getArticlesIdByLabelName(label)
+  }
+  // labels end
 }
 
 const blogManager = new BlogApiManager(blogConfig.articleCount)

@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import { getArticle } from '../mock/article'
 import { getCategory } from '../mock/category'
 import getCommentList, { getCommentItem } from '../mock/comment'
-import { getLabel, getLabels } from '../mock/label'
+import { getLabels } from '../mock/label'
 import getTag from '../mock/tag'
 import { getBoolean } from '../utils/boolean_utils'
 import { getInteger } from '../utils/number_utils'
@@ -42,7 +42,7 @@ function testGetCustomBoolean(): any {
 function testGetLabel(): any {
   const labels = []
   for (let i = 0; i < 100; ++i) {
-    labels.push(getLabel(i))
+    labels.push(getLabels(i))
   }
   return labels
 }
