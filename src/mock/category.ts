@@ -9,48 +9,37 @@ export const categories: CategoryType[] = [
   '读书心得',
 ]
 
-interface GetCategory {
-  (id: number): CategoryItem
-}
+export const categoryCountMap = new Map<CategoryType, number>()
+export const categoryArticlesIdMap = new Map<CategoryType, number[]>()
 
-function getCategory (id: number) {
-  return {
-    id,
-    createAt: getDate(),
-    updateAt: getDate(),
-    name: categories[getInteger({ max: categories.length })],
-  }
-}
+/**
+ * Get category name and increase counter
+ * @returns category
+ */
+const getCategoryName = (): CategoryType => {
+  const categoryName: CategoryType =
+    categories[getInteger({ max: categories.length })]
+  const count = categoryCountMap.get(categoryName)
 
-const categoryCountMap = new Map<CategoryType, number>()
-const categoryArticlesIdMap = new Map<CategoryType, number[]>()
+  if (count) categoryCountMap.set(categoryName, count + 1)
+  else categoryCountMap.set(categoryName, 1)
 
-// init
-categories.forEach((item) => {
-  categoryCountMap.set(item, 0)
-  categoryArticlesIdMap.set(item, [])
-})
-
-const increaseCategory = (category: CategoryType) => {
-  const count = categoryCountMap.get(category)
-  if (count) categoryCountMap.set(category, count + 1)
+  return categoryName
 }
 
 const addArticle = (category: CategoryType, id: number) => {
   const articleArr = categoryArticlesIdMap.get(category)
   if (articleArr) articleArr.push(id)
+  else categoryArticlesIdMap.set(category, [id])
 }
 
-/**
- * Get category by id
- * @param id article id
- * @returns category
- */
-export const getCategory = (id: number): CategoryType => {
-  const category = categories[getInteger({ max: categories.length })]
-  increaseCategory(category)
-  addArticle(category, id)
-  return category
+export function getCategory(id: number): CategoryItem {
+  const categoryName = getCategoryName()
+  addArticle(categoryName, id)
+  return {
+    id,
+    createAt: getDate(),
+    updateAt: getDate(),
+    name: categoryName,
+  }
 }
-
-export default increaseCategory
