@@ -6,7 +6,7 @@ export interface CommentItem extends BaseItem {
   avatar      : UrlType
   url?        : UrlType
   content     : string
-  childComment: CommentItem | null
+  childComment: CommentList | null
 }
 
 export type CommentList = CommentItem[]
