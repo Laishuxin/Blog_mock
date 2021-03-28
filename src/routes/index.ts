@@ -5,6 +5,7 @@ import articlesRouter from './articles'
 import articlesItemRouter from './articlesItem'
 import categoriesRouter from './categories'
 import labelsRouter from './labels'
+import messagesRouter from './messages'
 const router = new Router()
 
 router.prefix(API_PREFIX)
@@ -13,5 +14,6 @@ router.use(articlesRouter.routes())
 router.use(articlesItemRouter.routes())
 router.use(categoriesRouter.routes())
 router.use(labelsRouter.routes())
+router.use(messagesRouter.routes())
 
 export default router
