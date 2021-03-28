@@ -10,7 +10,7 @@ interface GetCommentItem {
   (id: number, childCommentCount: number): CommentItem
 }
 
-const articleCommentMap = new Map<number, CommentList>()
+export const articleCommentMap = new Map<number, CommentList>()
 
 /**
  * Get commentItem by article id

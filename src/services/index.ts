@@ -1,7 +1,4 @@
-import { cloneDeep } from 'lodash'
 import { blogConfig } from '../config/mock_config'
-import { getArticle } from '../mock/article'
-import { CategoriesApiQueryDefaults } from '../typings/api/CategoriesApi'
 import {
   ArticlesApiQuery,
   ArticlesApiQueryDefaults,
@@ -14,20 +11,33 @@ import CategoryManager from './CategoryManager'
 import { LabelsApiQuery } from '../typings/api/LabelsApi'
 import { LabelType } from '../typings/Models/Label'
 import LabelManager from './LabelManager'
+import CommentManager from './CommentMananger'
+import { CommentItem, CommentList } from '../typings/Models/Comment'
+import MessageManager from './MessageManager'
+import { MessagesApiQuery } from '../typings/api/MessagesApi'
+import { MessageList } from '../typings/Models/Message'
 
 class BlogApiManager {
   private _articleManager: ArticleManager
   private _categoryManager: CategoryManager
   private _labelManager: LabelManager
+  private _commentManager: CommentManager
+  private _messageManager: MessageManager
 
-  constructor(count = 100) {
-    this._articleManager = new ArticleManager(count)
+  constructor(articleCount = 100, messageCount = 20) {
+    this._articleManager = new ArticleManager(articleCount)
     this._categoryManager = new CategoryManager()
     this._labelManager = new LabelManager()
+    this._commentManager = new CommentManager()
+    this._messageManager = new MessageManager(messageCount)
   }
 
-  get count(): number {
+  get articleCount(): number {
     return this._articleManager.count
+  }
+
+  get messageCount(): number {
+    return this._messageManager.count
   }
 
   // article start
@@ -65,6 +75,22 @@ class BlogApiManager {
     return this._labelManager.getArticlesIdByLabelName(label)
   }
   // labels end
+
+  // comments start
+  getCommentsByArticleId(id: number): CommentList | undefined {
+    return this._commentManager.getCommentsByArticleId(id)
+  }
+
+  getCommentItem(id: number, childCommentCount = 3): CommentItem {
+    return this._commentManager.getCommentItem(id, childCommentCount)
+  }
+  // comments end
+  
+  // messages start
+  getMessages(query: MessagesApiQuery): MessageList {
+    return this._messageManager.getMessages(query)
+  }
+  // messages end
 }
 
 const blogManager = new BlogApiManager(blogConfig.articleCount)

@@ -30,7 +30,7 @@ class CategoryManager {
     return result
   }
 
-  getArticlesIdByCategoryType(category: CategoryType): number[] | undefined {
+  getArticlesIdByCategoryName(category: CategoryType): number[] | undefined {
     const articleIdSet = this._categoryArticlesIdMap.get(category)
     return articleIdSet ? Array.from(articleIdSet.keys()) : undefined
   }

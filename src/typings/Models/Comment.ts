@@ -1,11 +1,11 @@
-import { BaseItem, UrlType } from "./_Base";
+import { BaseItem, UrlType } from './_Base'
 
 export interface CommentItem extends BaseItem {
-  username    : string
-  email       : string
-  avatar      : UrlType
-  url?        : UrlType
-  content     : string
+  username: string
+  email: string
+  avatar: UrlType
+  url?: UrlType
+  content: string
   childComment: CommentList | null
 }
 

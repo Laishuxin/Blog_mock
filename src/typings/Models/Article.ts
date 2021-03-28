@@ -16,7 +16,7 @@ export interface ArticleItem extends BaseItem {
   views   : number       // Number of views
   favorite: number       // Number of favor
   labels   : LabelType[]
-  comments: CommentList
+  comments: CommentList | null
   tag     : TagType
 
   // flags

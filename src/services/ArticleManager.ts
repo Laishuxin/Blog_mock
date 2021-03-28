@@ -5,6 +5,7 @@ import {
   ArticlesApiQueryDefaults,
 } from '../typings/api/ArticlesApi'
 import { ArticleItem, ArticleList } from '../typings/Models/Article'
+import { getPageList } from '../utils/page_utils'
 
 class ArticleManager {
   // article list: index corresponding to article id
@@ -35,23 +36,35 @@ class ArticleManager {
     isAsc = ArticlesApiQueryDefaults.isAsc,
     sortField = ArticlesApiQueryDefaults.sortField,
   }: ArticlesApiQuery = ArticlesApiQueryDefaults): ArticleList {
-    const src = cloneDeep(this._articleList)
-    const srcLen = src.length
-    if (offset >= srcLen) return []
-    const destLen = offset + limit
+    // find articles which article.category === category
+    // if category is null return all articles
+    const clonedItems = category
+      ? this._articleList.filter((item) => item.category === category)
+      : this._articleList
+    // console.log(clonedItems)
 
-    // calculate upper bound
-    const high = srcLen <= destLen ? srcLen : destLen
+    const articleList = cloneDeep(clonedItems)
 
-    const dest: ArticleList = Array(high - offset)
-    for (
-      let srcIndex = offset, destIndex = 0;
-      srcIndex < high;
-      ++srcIndex, ++destIndex
-    ) {
-      dest[destIndex] = src[srcIndex]
+    // TODO(rushui 2021-03-28): merge to one??
+    if (sortField === 'updateAt' || sortField === 'createAt') {
+      articleList.sort((a, b) => {
+        return isAsc ? a[sortField] - b[sortField] : b[sortField] - a[sortField]
+      })
+    } else if (sortField === 'views' || sortField === 'commentCount') {
+      articleList.sort((a, b) => {
+        let aLen, bLen
+        if (sortField === 'views') {
+          aLen = a.views
+          bLen = b.views
+        } else {
+          aLen = a.comments ? a.comments.length : 0
+          bLen = b.comments ? b.comments.length : 0
+        }
+        // console.log(`sortField = ${sortField}, aLen = ${aLen}, bLen = ${bLen}`)
+        return isAsc ? aLen - bLen : bLen - aLen
+      })
     }
-    return dest
+    return getPageList<ArticleItem>(articleList, offset, limit)
   }
 
   getArticleItemById(id: number): ArticleItem | null {
